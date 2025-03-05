@@ -47,6 +47,8 @@ services:
       - -c
       - |
         chmod +x /start.sh && /start.sh
+    env_file:
+      - .env
   
 volumes:
   db-data:
