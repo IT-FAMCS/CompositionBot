@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 def FindUser(data: str):
-    result = requests.get(f"http://{os.getenv('DOMAIN')}/api/finduser?{data}")
+    result = requests.get(f"http://{os.getenv('DOMAIN')}/api/find_user?{data}")
     return result
 
 def FilterGroupFind(data: str):
@@ -34,7 +34,7 @@ def AddUser(data: list):
     "direction": data[3],
     }
 
-    result = requests.get(f"http://{os.getenv('DOMAIN')}/api/adduser", params=params)
+    result = requests.get(f"http://{os.getenv('DOMAIN')}/api/add_user", params=params)
     return result
 
 def AddAdmin(data: str):
@@ -46,7 +46,7 @@ def EditUser(data: list):
         "id": data[0],
         str(data[1]): data[2],
     }
-    result = requests.get(f"http://{os.getenv('DOMAIN')}/api/edituser", params=params)
+    result = requests.get(f"http://{os.getenv('DOMAIN')}/api/edit_user", params=params)
     return result
 
 def DeleteUser(data: str):
@@ -72,5 +72,5 @@ def parse_json(file_path):
         return json.load(file)
 
 def send_data_to_api(data):
-    url = f"http://{os.getenv('DOMAIN')}/api/adduser"
+    url = f"http://{os.getenv('DOMAIN')}/api/add_user"
     return [requests.get(url, params=row).status_code for row in data]
