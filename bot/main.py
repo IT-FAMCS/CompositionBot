@@ -150,14 +150,14 @@ def ExportData(call):
 
 
 #/edit
-EditUser = []
+EditUserList = []
 
 def EditUserId(message):
-    EditUser.append(message.text)
+    EditUserList.append(message.text)
     bot.send_message(message.chat.id, "👀 Что хотите изменить?", reply_markup=edit_choise_markup)
 
 def EditDataUser(MessageId, message):
-    EditUser.append(message.text)
+    EditUserList.append(message.text)
     bot.edit_message_text("🕗 Изменяю данные...", message.chat.id, MessageId)
     result = actions.EditUser(EditUser)
     EditUser.clear()
@@ -170,25 +170,25 @@ def EditUser(call):
 
 @bot.callback_query_handler(func=lambda call: call.data == "fio")
 def EditFio(call):
-    EditUser.append("fio")
+    EditUserList.append("fio")
     bot.edit_message_text("Введите новое ФИО", call.message.chat.id, call.message.message_id)
     bot.register_next_step_handler(call.message, partial(EditUserId, call.message.message_id))
 
 @bot.callback_query_handler(func=lambda call: call.data == "course")
 def EditCourse(call):
-    EditUser.append("course")
+    EditUserList.append("course")
     bot.edit_message_text("Введите новый курс", call.message.chat.id, call.message.message_id)
     bot.register_next_step_handler(call.message, partial(EditUserId, call.message.message_id))
 
 @bot.callback_query_handler(func=lambda call: call.data == "group")
 def EditGroup(call):
-    EditUser.append("group")
+    EditUserList.append("group")
     bot.edit_message_text("Введите новую групу", call.message.chat.id, call.message.message_id)
     bot.register_next_step_handler(message, partial(EditUserId, call.message.message_id))
 
 @bot.callback_query_handler(func=lambda call: call.data == "direction")
 def EditDirection(call):
-    EditUser.append("direction")
+    EditUserList.append("direction")
     bot.edit_message_text("Выберите новое направление", call.message.chat.id, call.message.message_id, reply_markup=edit_get_directions_markup())
 
 
@@ -201,7 +201,7 @@ def PaginateEdit(call):
 @bot.callback_query_handler(func=lambda call: call.data.startswith("edit_dir_"))
 def EditSelected(call):
     direction = call.data.split("_")[2]
-    EditUser.append(direction)
+    EditUserList.append(direction)
     bot.edit_message_text("🕗 Изменяю направление...", call.message.chat.id, call.message.message_id)
     result = actions.EditUser(EditUser)
     EditUser.clear()
